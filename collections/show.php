@@ -9,7 +9,7 @@
     
     <div class="row" id="collection-title">
         <div class="span12">
-            <h1 class="page-header"><?php echo metadata('collection',array('Dublin Core','Title')); ?><br /><small><?php echo $collection->totalItems(); ?> item<?php if ($collection->totalItems() != 1)  echo 's';  ?> in collection</small></h1>
+            <h1 class="page-header"><?php echo metadata('collection',array('Dublin Core','Title')); ?><br /><small><?php echo $collection->totalItems(); ?> document<?php if ($collection->totalItems() != 1)  echo 's';  ?> dans la collection (<?php echo link_to_items_in_collection('voir tout', $collection); ?>)</small></h1>
         </div>
     </div>
     <div class="row">
@@ -33,26 +33,28 @@
         </div>
     </div>
     <div class="row">
-        <?php foreach(loop('items') as $item): ?>
+        <?php foreach(loop('items', array_slice($items, 0, 4)) as $item): ?>
         <div class="span3">
             <div class="well" style="text-align:center;">
-                <div><?php echo link_to_item(	item_image('square_thumbnail',$props=array('class'=>'img-rounded img-polaroid'))); ?></div>
+                <div><?php echo link_to_item(item_image('fullsize',$props=array('class'=>'img-rounded img-polaroid'))); ?></div>
                 <br />
-                <p><small><strong><?php echo metadata('item',array('Dublin Core','Title')); ?></strong></small></p>
+				 <p><small><strong><?php echo metadata('item',array('Dublin Core','Creator')); ?></strong></small></p>
+                <h5><?php echo metadata('item',array('Dublin Core','Title')); ?></h5>
+			
             </div>
         </div>
         <?php endforeach ?>
     </div>
     <div class="row">
         <div class="span12">
-            <p class="view-items-link-browse lead" style="text-align:center"><?php echo link_to_items_in_collection('Browse all items in the collection', $collection); ?></p>
+            <p class="view-items-link-browse lead" style="text-align:center"><?php echo link_to_items_in_collection('Voir tous les documents de la collection', $collection); ?></p>
         
         </div>
     </div>
     <!-- end collection-description -->
     <div class="row">
         <div class="span12">
-            <?php fire_plugin_hook('public_colletion_show'); ?>
+            <?php fire_plugin_hook('public_collection_show'); ?>
         </div>
     </div>
     

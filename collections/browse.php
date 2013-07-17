@@ -2,7 +2,7 @@
 <div id="primary">
     <div class="row">
         <div class="span12">
-             <h1 class="page-header">Collections</h1>
+             <h1 class="page-header"><i class="icon-sitemap"></i> Collections</h1>
         </div>
     </div>
     <?php if (!pagination_links() == ''): ?>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="row">
                     <div class="span6">
-                        <p class="view-items-link-browse"><?php echo link_to_items_in_collection($text='View the items in this collection'); ?></p>
+                        <p class="view-items-link-browse"><?php echo link_to_items_in_collection($text='Voir tous les documents de cette collection'); ?></p>
                     </div>
                 </div>
             </div>
@@ -55,5 +55,6 @@
         </div>
     </div>
 </div><!-- end primary -->
+
 			
 <?php echo foot(); ?>

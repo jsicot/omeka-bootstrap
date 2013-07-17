@@ -1,92 +1,44 @@
 <?php echo head(array('bodyid'=>'home')); ?>
-    <div id="primary">
-    <?php if (get_theme_option('Homepage Text')): ?>
-        <div class="row">
-            <div class="span12">
-                <p class="lead"><?php echo get_theme_option('Homepage Text'); ?></p>
-            </div>
+<div class="row">
+   <?php echo random_featured_items(6); ?>
+    <div class="span5">
+        <div id="browseBox" class="homeBox" onclick="location.href='/items/browse'">
+            <h2><a href="/items/browse">CONSULTER <small>tous les contenus</small></a></h2>
         </div>
-    <?php endif; ?>
-        
-    <div class="row">
-    <?php if (get_theme_option('Display Featured Item') !== '0'): ?>
-        <div class="span6">
-            <!-- Featured Item -->
-            <div id="featured-item" class="well">
-                <?php echo display_random_featured_item(); ?>
-            </div><!--end featured-item-->
+        <div id="collectionBox" class="homeBox" onclick="location.href='/collections/browse'">
+            <h2><a href="/collections/browse">PARCOURIR <small>les collections</small></a></h2>
         </div>
-    <?php else: ?>
-        <div class="span6"></div>
-    <?php endif; ?>
-        
-    <?php if (get_theme_option('Display Featured Collection') !== '0'): ?>
-        <div class="span6">   
-            <!-- Featured Collection -->
-            <div id="featured-collection" class="well">
-                <?php echo display_random_featured_collection(); ?>
-            </div><!-- end featured collection -->
+        <div id="mapBox" class="homeBox" onclick="location.href='/geolocation/map/browse'">
+            <h2><a href="/geolocation/map/browse">NAVIGUER <small>sur la carte</small></a></h2>
         </div>
-    <?php else: ?>
-        <div class="span6"></div>
-    <?php endif; ?>
-    </div><!-- end row -->
-   
-    <?php if ((get_theme_option('Display Featured Exhibit') !== '0')
-                    && plugin_is_active('ExhibitBuilder')
-                    && function_exists('exhibit_builder_display_random_featured_exhibit')): ?>
-    <div class="row">
-        <div class="span12"><hr /></div>   
+        <div id="searchBox" class="homeBox" onclick="location.href='/items/search'">
+            <h2><a href="/items/search">RECHERCHER <small>par titre, auteur, date, etc.</small></a></h2>
+        </div>
     </div>
-    <div class="row">
-        <div class="span12">
-            <!-- Featured Exhibit -->
-            <?php echo exhibit_builder_display_random_featured_exhibit(); ?>
-        </div>
-        </div>
-    <?php endif; ?>
-    </div><!-- end primary -->
-
-    <div id="secondary">
-        <div id="recent-items">
-        <?php
-        $homepageRecentItems = (int)option('Homepage Recent Items');
-        if ($homepageRecentItems > 0) { set_loop_records('items',recent_items($homepageRecentItems)); }
-        if (has_loop_records('item')):
-        ?>
-        <div class="row">
-            <div class="span12"><hr /></div>   
-        </div>
-            
-        <div class="row">
-            <div class="span12">
-                <h2><?php echo __('Recently Added Items'); ?></h2>
-            </div>
-        </div>   
-        <div class="row-fluid">
-            <ul class="thumbnails">
-            <?php while (loop_items()): ?>
-                <li class="span4">
-                    <div class="thumbnail" style="padding-left:1em;padding-right:1em;text-align:center;">
-                        <h3><?php echo link_to_item(); ?></h3>
-                        <?php if(item_has_thumbnail()): ?>
-                            <div class="item-img">
-                                <?php echo link_to_item(item_thumbnail($props=array('class'=>'img-rounded','style'=>'margin:1em'))); ?>
-                            </div>
-                        <?php endif; ?>
-                        <?php if($desc = item('Dublin Core', 'Description', array('snippet'=>150))): ?>
-                                <p style="text-align: left"><?php echo $desc; ?><?php echo link_to_item('see more',(array('class'=>'show'))) ?></p>
-                        <?php endif; ?>
-                    </div>
-                </li>
-            <?php endwhile; ?>
-            </ul>
-        </div><!-- end row -->
-        <?php endif; ?>
-        </div>
-        </div>
-
-    </div><!-- end secondary -->
+    <div class="span12">
+        <hr />
+    </div>
 </div>
-
+<div class="row" id="rowBottom">
+   <!-- <div class="span3">
+        <div class="triBox" id='random_featured'>
+            <?php //echo random_featured_items(1); ?>
+        </div>
+    </div>-->
+     <div class="span3">
+        <div class="triBox text-center">
+            <div class="random-document">
+                <h4>À propos</h4>
+                <ul id="home-links" class="nav nav-stacked">
+                    <li><a href="/about">Le Projet</a></li>
+                    <li><a href="/team">L'Équipe</a></li>
+                    <li><a href="/conception">Aspects techniques</a></li>
+                    <li><a href="/rights">Conditions d'utilisation</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+	<?php echo random_featured_collection() ?> 
+   
+</div>
 <?php echo foot(); ?>

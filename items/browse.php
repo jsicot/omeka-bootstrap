@@ -7,11 +7,11 @@ echo head(array('title'=>$pageTitle,'bodyid'=>'items','bodyclass' => 'browse'));
     <div class="row">
         <div class="span12">
             <div class="page-header">
-                <h1><?php echo $pageTitle;?> <small><?php echo __('(%s items total)', $total_results); ?></small></h1>
+                <h1><i class="icon-th-large"></i> <?php echo $pageTitle;?> <small><?php echo __('(%s document', $total_results); ?><?php if ($total_results != 1)  echo 's';  ?>)</small></h1>
             </div>
         </div>
     </div>
-    <div class="nav nav-tabs" id="secondary-nav">
+    <div class="nav nav-tabs" id="secondary-nav">    
         <?php echo public_nav_items()->setUlClass('nav nav-pills'); ?>
     </div>
 
@@ -34,11 +34,16 @@ echo head(array('title'=>$pageTitle,'bodyid'=>'items','bodyclass' => 'browse'));
                         <?php endif; ?>
                             <div class="carousel-caption">
                                 <h4><?php echo link_to_item(item('Dublin Core', 'Title'), array('class'=>'permalink')); ?></h4>
-                                <?php if ($description = item('Dublin Core', 'Description', array('snippet'=>250))): ?>
+                                <?php if ($abstract = metadata('item',array('Dublin Core', 'Abstract'), array('snippet'=>250))): ?>
+	                                    <div class="item-description">
+	                                        <?php echo $abstract; ?>
+	                                    </div>
+								<?php  elseif ($description = metadata('item',array('Dublin Core', 'Description'))): ?>
                                     <p class="item-description">
                                         <?php echo $description; ?>
                                     </p>
-                                <?php elseif ($text = item('Item Type Metadata', 'Text', array('snippet'=>250))): ?>
+
+                                <?php elseif ($text = metadata('item', array('Item Type Metadata', 'Text'))): ?>
                                     <div class="item-description">
                                         <?php echo $text; ?>
                                     </div>
@@ -66,7 +71,7 @@ echo head(array('title'=>$pageTitle,'bodyid'=>'items','bodyclass' => 'browse'));
         <div class="span2">
             <?php if (metadata($item, 'has thumbnail')): ?>
                 <div class="item-img">
-                <?php echo link_to_item(item_image('thumbnail')); ?>
+                <?php echo link_to_item(item_image('fullsize',$props=array('class'=>'img-polaroid'))); ?>
                 </div>
             <?php endif; ?>
         </div>
@@ -74,9 +79,18 @@ echo head(array('title'=>$pageTitle,'bodyid'=>'items','bodyclass' => 'browse'));
             <div class="item-title">
                 <h3><?php echo link_to_item(metadata('item', array('Dublin Core', 'Title')), array('class'=>'permalink')); ?></h3>
             </div>
+           <?php if ($author = metadata($item,array('Dublin Core','Creator'))): ?>
+                    <p><div><strong>Par 
+                        <?php echo ' ' . $author . '</strong></div>'; ?>
+		   </p>
+            <?php endif; ?>
             <?php if ($text = metadata('item', array('Item Type Metadata', 'Text'))): ?>
                 <div class="item-description">
                     <p><?php echo $text; ?></p>
+                </div>
+			<?php elseif ($abstract = metadata('item',array('Dublin Core', 'Abstract'), array('snippet'=>250))): ?>
+                <div class="item-description">
+                    <?php echo $abstract ; ?>
                 </div>
             <?php elseif ($description = metadata('item',array('Dublin Core', 'Description'))): ?>
                 <div class="item-description">
